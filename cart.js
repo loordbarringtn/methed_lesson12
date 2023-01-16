@@ -1,5 +1,6 @@
 const cart = {
   items: [],
+  count: 0,
   discount: null,
   set setDiscount(discount) {
     if (discount === "METHED") {
@@ -8,7 +9,9 @@ const cart = {
       this.discount = 0.21;
     }
   },
-  count: 0,
+  get totalPrice() {
+    return this.calculateItemPrice();
+  },
   add(productName, productPrice, quantity) {
     this.items.push({ productName, productPrice, quantity });
     this.count += quantity;
@@ -28,9 +31,7 @@ const cart = {
       this.items.reduce((acc, cur) => acc + cur.productPrice * cur.quantity, 0)
     );
   },
-  get totalPrice() {
-    return this.calculateItemPrice();
-  },
+
   clear() {
     this.items.length = 0;
     this.count = 0;
